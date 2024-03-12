@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "asbg"
+version = "0.0.1"
+authors = [
+  { name="Thomas Erard", email="erard.thomas@gmail.com" },
+]
+description = "Get the results of the ASBG players"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  "beautifulsoup4",
+  "click",
+  "PyYAML",
+  "requests",
+]
+
+[project.optional-dependencies]
+development = [
+    "pre-commit",
+    "pytest",
+]
+
+[project.scripts]
+asbg = "asbg.cli:cli"

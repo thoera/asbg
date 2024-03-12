@@ -1,0 +1,17 @@
+# Cache
+**/.cache/
+**/__pycache__/
+
+# Virtual environments
+venv/
+
+# VS Code settings
+**/.vscode/
+
+# Packaging
+dist/
+**/*.egg-info/
+
+# Notebooks
+**/*.ipynb
+**/.ipynb_checkpoints

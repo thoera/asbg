@@ -1,0 +1,26 @@
+version: 1
+
+formatters:
+  console_formatter:
+    format: '[%(asctime)s][%(levelname)s][%(filename)s][%(module)s.%(funcName)s:%(lineno)s] %(message)s'
+
+handlers:
+  console_handler:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: console_formatter
+    stream: ext://sys.stdout
+
+loggers:
+  development:
+    level: DEBUG
+    handlers: [console_handler]
+    propagate: no
+  production:
+    level: WARNING
+    handlers: [console_handler]
+    propagate: no
+
+root:
+  level: DEBUG
+  handlers: [console_handler]

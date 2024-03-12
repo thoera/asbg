@@ -1,0 +1,43 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-yaml
+        name: check-yaml
+        description: Attempt to load all yaml files to check the syntax.
+      - id: check-toml
+        name: check-toml
+        description: Attempts to load all TOML files to check the syntax.
+      - id: end-of-file-fixer
+        name: end-of-file-fixer
+        description: Make sure files end in a newline and only a newline.
+      - id: fix-encoding-pragma
+        name: fix-encoding-pragma
+        description: Remove the coding pragma.
+        args: [--remove]
+      - id: mixed-line-ending
+        name: mixed-line-ending
+        description: Replace or checks mixed line ending.
+        args: [--fix=lf]
+      - id: trailing-whitespace
+        name: trailing-whitespace
+        description: Trim trailing whitespace.
+      - id: check-merge-conflict
+        name: check-merge-conflict
+        description: Check for files that contain merge conflict strings.
+      - id: name-tests-test
+        name: name-tests-test
+        description: Verify that test files are named correctly.
+        args: [--pytest-test-first]
+      - id: check-added-large-files
+        name: check-added-large-files
+        description: Prevent giant files from being committed.
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.3.2
+    hooks:
+      - id: ruff
+        name: ruff
+        description: Ruff linter.
+      - id: ruff-format
+        name: ruff-format
+        description: Ruff formatter.

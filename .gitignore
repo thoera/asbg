@@ -1,6 +1,7 @@
 # Cache
 **/.cache/
 **/__pycache__/
+**/.ruff_cache/
 
 # Virtual environments
 venv/

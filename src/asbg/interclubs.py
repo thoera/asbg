@@ -3,7 +3,7 @@
 import importlib.resources as pkg_resources
 import re
 import sqlite3
-from typing import NamedTuple, Optional
+from typing import NamedTuple
 
 import requests
 from bs4 import BeautifulSoup, element
@@ -24,11 +24,11 @@ class Team(NamedTuple):
 
 
 class Disciplines(NamedTuple):
-    SH: Optional[str] = None
-    SD: Optional[str] = None
-    DH: Optional[str] = None
-    DD: Optional[str] = None
-    DX: Optional[str] = None
+    SH: str | None = None
+    SD: str | None = None
+    DH: str | None = None
+    DD: str | None = None
+    DX: str | None = None
 
 
 class Results(NamedTuple):

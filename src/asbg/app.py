@@ -16,23 +16,28 @@ COLUMN_CONFIG = {
 }
 
 
-def app():
+def app() -> None:
+    """Creates the streamlit app."""
     res = FormatResults()
     results = res.get_results()
 
     st.set_page_config(
-        page_title="Résultats ASBG75",
+        page_title="Résultats ASBG",
         layout="wide",
     )
 
-    st.title("Résultats des joueuses et joueurs de l'ASBG 75 lors des Interclubs")
+    st.header(
+        "Résultats des joueuses et joueurs de l'ASBG lors des Interclubs "
+        ":sports_medal:",
+        divider="rainbow",
+    )
 
     st.caption(
         "Les résultats sont ceux de l'ensemble de l'année 2023-2024 "
         "au moment où les données ont été collectées, "
         "il est donc possible que de nouveaux matchs se soient déroulés depuis. "
         "Afin d'avoir les dernières données disponibles, "
-        "il est souhaitable de relancer la collecte régulièrement."
+        "il est recommandé de relancer la collecte régulièrement."
     )
 
     col1, col2 = st.columns(2)
@@ -42,20 +47,12 @@ def app():
         results_aggregated = res.aggregate_results(results)
         col1.dataframe(results_aggregated, column_config=COLUMN_CONFIG)
 
-    with st.container():
-        col1.subheader("Résultats des équipes mixtes")
+        col2.subheader("Résultats des équipes mixtes")
         results_mixed = res.filter_results(
             results, competition="Interclubs Comité 75 D1"
         )
         results_mixed = res.aggregate_results(results_mixed)
-        col1.dataframe(results_mixed, column_config=COLUMN_CONFIG)
-
-        col2.subheader("Résultats des équipes vétérans")
-        results_veterans = res.filter_results(
-            results, competition="Interclubs Comité 75 D1 Vétérans"
-        )
-        results_veterans = res.aggregate_results(results_veterans)
-        col2.dataframe(results_veterans, column_config=COLUMN_CONFIG)
+        col2.dataframe(results_mixed, column_config=COLUMN_CONFIG)
 
     with st.container():
         col1.subheader("Résultats des équipes masculines")
@@ -71,6 +68,14 @@ def app():
         )
         results_women = res.aggregate_results(results_women)
         col2.dataframe(results_women, column_config=COLUMN_CONFIG)
+
+    with st.container():
+        col1.subheader("Résultats des équipes vétérans")
+        results_veterans = res.filter_results(
+            results, competition="Interclubs Comité 75 D1 Vétérans"
+        )
+        results_veterans = res.aggregate_results(results_veterans)
+        col1.dataframe(results_veterans, column_config=COLUMN_CONFIG)
 
 
 if __name__ == "__main__":

@@ -19,7 +19,9 @@ with pkg_resources.as_file(pkg_resources.files("asbg.data")) as dir:
 
 class Team(NamedTuple):
     team_id: str
+    competition: str
     division: str
+    group: str
     year: str
 
 
@@ -37,7 +39,7 @@ class Results(NamedTuple):
 
 
 class Interclubs:
-    """Parses the results of the Interclubs and saves the results into a database."""
+    """Parses the results of the Interclubs and saves them into a database."""
 
     def __init__(self) -> None:
         self.name = "Association Sportive des Badistes Givrés"
@@ -50,11 +52,11 @@ class Interclubs:
         The format of the "team" table is the following:
 
         ```
-        | team_id |   division |   year |
-        | ------- | ---------- | ------ |
-        |  <id_1> | <division> | <year> |
-        |  <id_2> | <division> | <year> |
-        |     ... |        ... |    ... |
+        | team_id |   competition |   division |   group |   year |
+        | ------- | ------------- | ---------- | ------- | ------ |
+        |  <id_1> | <competition> | <division> | <group> | <year> |
+        |  <id_2> | <competition> | <division> | <group> | <year> |
+        |     ... |           ... |        ... |     ... |    ... |
         ```
 
         Where `team_id` is the primary key.
@@ -101,17 +103,17 @@ class Interclubs:
 
         year = soup.find_all("a", {"href": "https://icbad.ffbad.org"})[1].text
 
+        team_details = soup.find_all("h2")
+
         regex = re.compile(rf"{self.name}.*")
 
-        divisions = soup.find_all("h2")
+        teams = []
 
-        team_ids = []
+        for team in team_details:
+            competition, division, group = team.text.split(" - ")
 
-        for division in divisions:
-            division_ = division.text.split(" - ")[0]
-
-            for sibling in division.next_siblings:
-                # If we find a "h2" header, it means that we reached a new division.
+            for sibling in team.next_siblings:
+                # If we find a "h2" header, it means that we reached a new team.
                 if sibling.name == "h2":
                     break
 
@@ -119,13 +121,14 @@ class Interclubs:
                     match = sibling.find_all("td", class_="nom-equipe", string=regex)
                     if match:
                         team_id = parse_team_id(match[0])
-                        team_ids.append(Team(team_id, division_, year))
+                        teams.append(Team(team_id, competition, division, group, year))
                 except AttributeError:
                     pass
 
-        return team_ids
+        return teams
 
-    def _get_team_results(self, team_id: str) -> Disciplines[Results]:
+    @staticmethod
+    def _get_team_results(team_id: str) -> Disciplines[Results]:
         """Gets the results in the Interclubs for a given team.
 
         Args:
@@ -158,7 +161,8 @@ class Interclubs:
 
         return Disciplines(**disciplines)
 
-    def _save(self, results: dict[Team, Disciplines[Results]]) -> None:
+    @staticmethod
+    def _save(results: dict[Team, Disciplines[Results]]) -> None:
         """Saves the results into a SQLite database.
 
         This method will create the database if it does not already exists.
@@ -166,20 +170,14 @@ class Interclubs:
         Args:
             results: The results to save into the database.
         """
-        logger.debug("Connecting (and creating if needed) the database `data.db`")
+        logger.debug("Connecting to (and creating if needed) the database `data.db`")
 
         con = sqlite3.connect(DATABASE_FILE)
 
         logger.debug("Creating the table `team` if it does not exist")
-        query = "CREATE TABLE IF NOT EXISTS team(team_id PRIMARY KEY, division, year)"
-
-        with con:
-            con.execute(query)
-
-        logger.debug("Creating the table `result` if it does not exist")
         query = """
             CREATE TABLE IF NOT EXISTS
-            result(team_id, discipline, wins, losses, PRIMARY KEY(team_id, discipline))
+            team(team_id PRIMARY KEY, competition, division, 'group', year)
         """
 
         with con:
@@ -190,10 +188,21 @@ class Interclubs:
         rows_teams = []
 
         for team in results:
-            rows_teams.append((team.team_id, team.division, team.year))
+            rows_teams.append(
+                (team.team_id, team.competition, team.division, team.group, team.year)
+            )
 
         with con:
-            con.executemany("REPLACE INTO team VALUES(?, ?, ?)", rows_teams)
+            con.executemany("REPLACE INTO team VALUES(?, ?, ?, ?, ?)", rows_teams)
+
+        logger.debug("Creating the table `result` if it does not exist")
+        query = """
+            CREATE TABLE IF NOT EXISTS
+            result(team_id, discipline, wins, losses, PRIMARY KEY(team_id, discipline))
+        """
+
+        with con:
+            con.execute(query)
 
         logger.debug("Populating the table `result`")
 

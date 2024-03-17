@@ -1,4 +1,4 @@
-"""This module defines the commands available after installing the library."""
+"""This module defines the commands available after installing the package."""
 
 import click
 
@@ -13,5 +13,5 @@ def cli() -> None:
 
 @cli.command()
 def get_interclubs_results() -> None:
-    """Gets the results of the Interclubs."""
+    """Gets the results of the Interclubs and saves them into a database."""
     Interclubs().parse()

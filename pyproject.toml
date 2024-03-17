@@ -19,8 +19,10 @@ classifiers = [
 dependencies = [
   "beautifulsoup4",
   "click",
+  "pandas",
   "PyYAML",
   "requests",
+  "streamlit",
 ]
 
 [project.optional-dependencies]

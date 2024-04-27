@@ -2,7 +2,7 @@
 
 import streamlit as st
 
-from asbg.results import FormatResults
+from asbg.results import FormatResults, establish_connection, fetch_results
 
 COLUMN_CONFIG = {
     "discipline": st.column_config.Column("Discipline"),
@@ -18,13 +18,12 @@ COLUMN_CONFIG = {
 
 def app() -> None:
     """Creates the streamlit app."""
-    res = FormatResults()
-    results = res.get_results()
+    st.set_page_config(page_title="Résultats ASBG", layout="wide")
 
-    st.set_page_config(
-        page_title="Résultats ASBG",
-        layout="wide",
-    )
+    con = establish_connection()
+    results = fetch_results(con)
+
+    res = FormatResults()
 
     st.header(
         "Résultats des joueuses et joueurs de l'ASBG lors des Interclubs "

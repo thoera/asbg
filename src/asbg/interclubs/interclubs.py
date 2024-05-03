@@ -6,8 +6,8 @@ from typing import NamedTuple
 import requests
 from bs4 import BeautifulSoup, element
 
-from asbg.logger import get_logger
-from asbg.utils import connect
+from asbg.utils.database import connect
+from asbg.utils.logger import get_logger
 
 
 class Team(NamedTuple):
@@ -32,14 +32,14 @@ class Results(NamedTuple):
 
 
 class Interclubs:
-    """Parses the results of the Interclubs and saves them into a database."""
+    """Fetches, parses and saves the results of the Interclubs into a database."""
 
     def __init__(self) -> None:
         self.name = "Association Sportive des Badistes Givrés"
         self.logger = get_logger()
 
     def parse(self) -> None:
-        """Parses and saves the results of the Interclubs into a database.
+        """Fetches, parses and saves the results of the Interclubs into a database.
 
         Two tables will be created and populated: a "team" table and a "result" table.
 

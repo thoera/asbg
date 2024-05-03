@@ -1,8 +1,57 @@
 """This module builds the streamlit app to visualize the results of the Interclubs."""
 
+import importlib.resources as pkg_resources
+import sqlite3
+
+import pandas as pd
 import streamlit as st
 
-from asbg.results import FormatResults, establish_connection, fetch_results
+from asbg.interclubs.results import FormatResults
+from asbg.utils.logger import get_logger
+
+
+def establish_connection() -> sqlite3.Connection:
+    """Establishes a connection to the database.
+
+    Returns:
+        A Connection object to the database.
+    """
+    with pkg_resources.as_file(pkg_resources.files("asbg.data")) as dir:
+        DATABASE_FILE = dir / "data.db"
+
+    return sqlite3.connect(DATABASE_FILE)
+
+
+def fetch_results(_con: sqlite3.Connection) -> pd.DataFrame:
+    """Gets the results of the Interclubs from the database.
+
+    Args:
+        _con: A Connection object to the database.
+
+    Returns:
+        The results of the Interclubs fetched from the database.
+    """
+    logger = get_logger()
+    logger.debug("Connecting to the database `data.db`")
+
+    query = """
+        SELECT
+            result.team_id,
+            team.competition,
+            result.discipline,
+            result.wins,
+            result.losses
+        FROM result
+        INNER JOIN team ON result.team_id = team.team_id
+    """
+
+    with _con:
+        res = _con.execute(query)
+        rows = res.fetchall()
+
+    cols = ["team_id", "competition", "discipline", "wins", "losses"]
+
+    return pd.DataFrame(data=rows, columns=cols)
 
 
 COLUMN_CONFIG = {

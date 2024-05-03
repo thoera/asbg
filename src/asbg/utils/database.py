@@ -3,7 +3,7 @@ import sqlite3
 
 import pandas as pd
 
-from asbg.logger import get_logger
+from asbg.utils.logger import get_logger
 
 
 def connect() -> sqlite3.Connection:
@@ -19,7 +19,7 @@ def connect() -> sqlite3.Connection:
 
 
 def fetch_results(con: sqlite3.Connection) -> pd.DataFrame:
-    """Gets the results of the Interclubs from the database.
+    """Fetches the results of the Interclubs from the database.
 
     Args:
         con: A Connection object to the database.

@@ -32,6 +32,7 @@ development = [
 ]
 
 [project.scripts]
+# Defines one entrypoint: a click command called "cli" in the module asbg/cli.py
 asbg = "asbg.cli:cli"
 
 [tool.ruff]

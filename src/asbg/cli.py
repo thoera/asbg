@@ -15,7 +15,7 @@ def cli() -> None:
 @cli.command(
     short_help="Gets the results of the Interclubs and saves them into a database."
 )
-def get_interclubs_results() -> None:
+def interclubs_results() -> None:
     """Gets the results of the Interclubs and saves them into a database."""
     Interclubs().parse()
 

@@ -59,7 +59,7 @@ L'utilisation du package se fait via une `CLI`.
 Il est possible de mettre à jour la base de données des résultats des Interclubs avec la commande :
 
 ```sh
-asbg get-interclubs-results
+asbg interclubs-results
 ```
 
 La commande ci-dessous permet de visualiser les résultats dans votre navigateur :

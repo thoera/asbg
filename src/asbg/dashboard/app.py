@@ -3,6 +3,7 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
 from dash import dash_table, dcc, html
+from plotly.graph_objects import Figure
 
 from asbg.interclubs.results import FormatResults
 from asbg.utils.database import connect, fetch_results
@@ -51,7 +52,7 @@ percentage = dash_table.FormatTemplate.percentage(decimals=1)
 def format_table(data: pd.DataFrame, title: str, width: int = 6, offset: int = 0) -> dbc.Col:
     table = dbc.Col(
         [
-            html.H3(title),
+            html.Br(),
             dash_table.DataTable(
                 data.to_dict("records"),
                 columns=[
@@ -67,16 +68,60 @@ def format_table(data: pd.DataFrame, title: str, width: int = 6, offset: int = 0
                 ],
                 style_as_list_view=True,
                 style_cell_conditional=[{"if": {"column_id": "discipline"}, "textAlign": "left"}],
-                style_header={"backgroundColor": "white"},
+                style_header={"backgroundColor": "white", "fontSize": 14},
+                style_cell={"fontSize": 14},
+            ),
+            html.P(
+                [
+                    "Source : ",
+                    html.A("https://icbad.ffbad.org", href="https://icbad.ffbad.org"),
+                ],
+                style={"margin-top": "1rem", "font-size": "0.9rem"},
             ),
         ],
         width={"size": width, "offset": offset},
     )
 
-    fig = px.bar(data, x="discipline", y="win_percentage")
+    fig = format_barplot(data)
     fig = dbc.Col(dcc.Graph(figure=fig), width={"size": 5, "offset": 1})
 
-    return [html.Br(), dbc.Row([table, fig])]
+    return [
+        html.Br(),
+        dbc.Col(html.H3(title), width={"size": 11, "offset": 1}),
+        dbc.Row([table, fig]),
+    ]
+
+
+def format_barplot(data: pd.DataFrame) -> Figure:
+    fig = px.bar(
+        data,
+        x="discipline",
+        y="win_percentage",
+        width=600,
+        height=400,
+        template="simple_white",
+        title="Pourcentage de victoires par discipline (%)",
+    )
+
+    fig.update_xaxes(ticks="")
+    fig.update_yaxes(range=[0, 1], tickformat=",.0%")
+    fig.update_layout(xaxis_title=None, yaxis_title=None)
+    fig.add_shape(
+        type="line",
+        line_color="salmon",
+        line_width=3,
+        opacity=1,
+        line_dash="dot",
+        x0=0,
+        x1=1,
+        xref="paper",
+        y0=0.5,
+        y1=0.5,
+        yref="y",
+    )
+    fig.update_traces(hovertemplate=None, hoverinfo="skip")
+
+    return fig
 
 
 layout = [

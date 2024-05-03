@@ -4,6 +4,7 @@ import streamlit as st
 
 from asbg.results import FormatResults, establish_connection, fetch_results
 
+
 COLUMN_CONFIG = {
     "discipline": st.column_config.Column("Discipline"),
     "wins": st.column_config.Column("Nombre de victoires"),
@@ -26,8 +27,7 @@ def app() -> None:
     res = FormatResults()
 
     st.header(
-        "Résultats des joueuses et joueurs de l'ASBG lors des Interclubs "
-        ":sports_medal:",
+        "Résultats des joueuses et joueurs de l'ASBG lors des Interclubs " ":sports_medal:",
         divider="rainbow",
     )
 
@@ -47,24 +47,18 @@ def app() -> None:
         col1.dataframe(results_aggregated, column_config=COLUMN_CONFIG)
 
         col2.subheader("Résultats des équipes mixtes")
-        results_mixed = res.filter_results(
-            results, competition="Interclubs Comité 75 D1"
-        )
+        results_mixed = res.filter_results(results, competition="Interclubs Comité 75 D1")
         results_mixed = res.aggregate_results(results_mixed)
         col2.dataframe(results_mixed, column_config=COLUMN_CONFIG)
 
     with st.container():
         col1.subheader("Résultats des équipes masculines")
-        results_men = res.filter_results(
-            results, competition="Interclubs Comité 75 D1 Masculin"
-        )
+        results_men = res.filter_results(results, competition="Interclubs Comité 75 D1 Masculin")
         results_men = res.aggregate_results(results_men)
         col1.dataframe(results_men, column_config=COLUMN_CONFIG)
 
         col2.subheader("Résultats des équipes féminines")
-        results_women = res.filter_results(
-            results, competition="Interclubs Comité 75 D1 Féminin"
-        )
+        results_women = res.filter_results(results, competition="Interclubs Comité 75 D1 Féminin")
         results_women = res.aggregate_results(results_women)
         col2.dataframe(results_women, column_config=COLUMN_CONFIG)
 

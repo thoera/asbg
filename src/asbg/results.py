@@ -8,14 +8,12 @@ import streamlit as st
 
 from asbg.logger import get_logger
 
-logger = get_logger()
-
 
 DISCIPLINES = ["SH", "SD", "DH", "DD", "DX"]
 
 
 class FormatResults:
-    """Formats the results of the Interclubs to feed to the streamlit application."""
+    """Formats the results of the Interclubs to feed to the dashboarding application."""
 
     @staticmethod
     def filter_results(results: pd.DataFrame, competition: str) -> pd.DataFrame:
@@ -39,9 +37,7 @@ class FormatResults:
         Returns:
             The aggregated results.
         """
-        results = (
-            results.loc[:, ["discipline", "wins", "losses"]].groupby("discipline").sum()
-        )
+        results = results.loc[:, ["discipline", "wins", "losses"]].groupby("discipline").sum()
 
         results["win_percentage"] = results["wins"] / results.sum(axis="columns")
 

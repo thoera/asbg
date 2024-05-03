@@ -16,12 +16,12 @@ def cli() -> None:
     pass
 
 
-@click.command(short_help="Display the results of the Interclubs in your browser.")
+@click.command(short_help="Display the results of the ASBG players.")
 def dashboard() -> None:
-    """Display the results of the Interclubs in your browser."""
+    """Display the results of the ASBG players."""
     dirname = os.path.dirname(__file__)
-    filename = os.path.join(dirname, "dashboard", "app_streamlit.py")
-    os.system(f"streamlit run {filename}")
+    filename = os.path.join(dirname, "dashboard", "app.py")
+    os.system(f"python {filename}")
 
 
 @click.command(short_help="Show the version of the application.")

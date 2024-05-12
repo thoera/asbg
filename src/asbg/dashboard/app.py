@@ -8,6 +8,7 @@ from dash import dash_table, dcc, html
 from plotly.graph_objects import Figure
 
 from asbg.interclubs.results import FormatResults
+from asbg.utils.constants import COMPETITIONS, HEADERS
 from asbg.utils.database import connect, fetch_results
 
 
@@ -18,16 +19,16 @@ res = FormatResults()
 
 results_aggregated = res.aggregate_results(results).reset_index()
 
-results_mixed = res.filter_results(results, competition="Interclubs Comité 75 D1")
+results_mixed = res.filter_results(results, competition=COMPETITIONS["mixed"])
 results_mixed = res.aggregate_results(results_mixed).reset_index()
 
-results_men = res.filter_results(results, competition="Interclubs Comité 75 D1 Masculin")
+results_men = res.filter_results(results, competition=COMPETITIONS["men"])
 results_men = res.aggregate_results(results_men).reset_index()
 
-results_women = res.filter_results(results, competition="Interclubs Comité 75 D1 Féminin")
+results_women = res.filter_results(results, competition=COMPETITIONS["women"])
 results_women = res.aggregate_results(results_women).reset_index()
 
-results_veterans = res.filter_results(results, competition="Interclubs Comité 75 D1 Vétérans")
+results_veterans = res.filter_results(results, competition=COMPETITIONS["veterans"])
 results_veterans = res.aggregate_results(results_veterans).reset_index()
 
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -58,12 +59,12 @@ def format_table(data: pd.DataFrame, title: str, width: int = 6, offset: int = 0
             dash_table.DataTable(
                 data.to_dict("records"),
                 columns=[
-                    {"id": "discipline", "name": "Discipline"},
-                    {"id": "wins", "name": "Nombre de victoires"},
-                    {"id": "losses", "name": "Nombre de défaites"},
+                    {"id": "discipline", "name": HEADERS["discipline"]},
+                    {"id": "wins", "name": HEADERS["wins"]},
+                    {"id": "losses", "name": HEADERS["losses"]},
                     {
                         "id": "win_percentage",
-                        "name": "Pourcentage de victoires (%)",
+                        "name": HEADERS["win_percentage"],
                         "type": "numeric",
                         "format": percentage,
                     },

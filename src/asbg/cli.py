@@ -22,7 +22,7 @@ def cli() -> None:
     default="streamlit",
     show_default=True,
     type=click.Choice(["dash", "streamlit"], case_sensitive=False),
-    help="Change the frontend used to display the dashboard.",
+    help="The frontend used to display the dashboard.",
 )
 def dashboard(frontend: str) -> None:
     """Display the results of the ASBG players."""

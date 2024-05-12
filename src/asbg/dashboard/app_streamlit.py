@@ -3,15 +3,16 @@
 import streamlit as st
 
 from asbg.interclubs.results import FormatResults
+from asbg.utils.constants import COMPETITIONS, HEADERS
 from asbg.utils.database import connect, fetch_results
 
 
 COLUMN_CONFIG = {
-    "discipline": st.column_config.Column("Discipline"),
-    "wins": st.column_config.Column("Nombre de victoires"),
-    "losses": st.column_config.Column("Nombre de défaites"),
+    "discipline": st.column_config.Column(HEADERS["discipline"]),
+    "wins": st.column_config.Column(HEADERS["wins"]),
+    "losses": st.column_config.Column(HEADERS["losses"]),
     "win_percentage": st.column_config.ProgressColumn(
-        "Pourcentage de victoires (%)",
+        HEADERS["win_percentage"],
         min_value=0,
         max_value=1,
     ),
@@ -48,26 +49,24 @@ def app() -> None:
         col1.dataframe(results_aggregated, column_config=COLUMN_CONFIG)
 
         col2.subheader("Résultats des équipes mixtes")
-        results_mixed = res.filter_results(results, competition="Interclubs Comité 75 D1")
+        results_mixed = res.filter_results(results, competition=COMPETITIONS["mixed"])
         results_mixed = res.aggregate_results(results_mixed)
         col2.dataframe(results_mixed, column_config=COLUMN_CONFIG)
 
     with st.container():
         col1.subheader("Résultats des équipes masculines")
-        results_men = res.filter_results(results, competition="Interclubs Comité 75 D1 Masculin")
+        results_men = res.filter_results(results, competition=COMPETITIONS["men"])
         results_men = res.aggregate_results(results_men)
         col1.dataframe(results_men, column_config=COLUMN_CONFIG)
 
         col2.subheader("Résultats des équipes féminines")
-        results_women = res.filter_results(results, competition="Interclubs Comité 75 D1 Féminin")
+        results_women = res.filter_results(results, competition=COMPETITIONS["women"])
         results_women = res.aggregate_results(results_women)
         col2.dataframe(results_women, column_config=COLUMN_CONFIG)
 
     with st.container():
         col1.subheader("Résultats des équipes vétérans")
-        results_veterans = res.filter_results(
-            results, competition="Interclubs Comité 75 D1 Vétérans"
-        )
+        results_veterans = res.filter_results(results, competition=COMPETITIONS["veterans"])
         results_veterans = res.aggregate_results(results_veterans)
         col1.dataframe(results_veterans, column_config=COLUMN_CONFIG)
 

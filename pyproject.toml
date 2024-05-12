@@ -24,6 +24,7 @@ dependencies = [
   "PyYAML",
   "requests",
   "streamlit",
+  "tabulate",
 ]
 
 [project.optional-dependencies]
@@ -35,6 +36,9 @@ development = [
 [project.scripts]
 # Defines one entrypoint: a click command called "cli" in the module asbg/cli.py
 asbg = "asbg.cli:cli"
+
+[tool.pytest]
+cache_dir  = ".cache"
 
 [tool.pytest.ini_options]
 addopts = ["--import-mode=importlib"]

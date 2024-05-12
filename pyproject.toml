@@ -36,6 +36,10 @@ development = [
 # Defines one entrypoint: a click command called "cli" in the module asbg/cli.py
 asbg = "asbg.cli:cli"
 
+[tool.pytest.ini_options]
+addopts = ["--import-mode=importlib"]
+testpaths = ["tests"]
+
 [tool.ruff]
 cache-dir = ".cache"
 line-length = 100
@@ -43,3 +47,4 @@ lint.extend-select = ["I"]
 
 [tool.ruff.lint.isort]
 lines-after-imports = 2
+known-first-party = ["asbg"]

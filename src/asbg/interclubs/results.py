@@ -41,7 +41,7 @@ class FormatResults:
 
     @staticmethod
     def _remove_disciplines_not_played(results: pd.DataFrame) -> pd.DataFrame:
-        """Removes from the results the disciplines which have not been played.
+        """Removes the disciplines which have not been played from the results.
 
         Args:
             results: The results from which to remove the disciplines.

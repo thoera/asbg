@@ -62,6 +62,14 @@ Il est possible de mettre à jour la base de données des résultats des Intercl
 asbg interclubs fetch
 ```
 
+Les résultats peuvent être visualiser de manière textuelle dans un terminal avec la commande suivante :
+
+```sh
+asbg interclubs show
+```
+
+L'option `--competition` permet de filtrer les résultats si besoin.
+
 La commande ci-dessous permet de visualiser les résultats dans votre navigateur :
 
 ```sh

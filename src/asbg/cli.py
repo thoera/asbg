@@ -17,11 +17,24 @@ def cli() -> None:
 
 
 @click.command(short_help="Display the results of the ASBG players.")
-def dashboard() -> None:
+@click.option(
+    "--frontend",
+    default="streamlit",
+    show_default=True,
+    type=click.Choice(["dash", "streamlit"], case_sensitive=False),
+    help="Change the frontend used to display the dashboard.",
+)
+def dashboard(frontend: str) -> None:
     """Display the results of the ASBG players."""
     dirname = os.path.dirname(__file__)
-    filename = os.path.join(dirname, "dashboard", "app.py")
-    os.system(f"python {filename}")
+
+    if frontend == "streamlit":
+        filename = os.path.join(dirname, "dashboard", "app_streamlit.py")
+        os.system(f"streamlit run {filename}")
+
+    if frontend == "dash":
+        filename = os.path.join(dirname, "dashboard", "app.py")
+        os.system(f"python {filename}")
 
 
 @click.command(short_help="Show the version of the application.")

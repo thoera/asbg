@@ -1,3 +1,5 @@
+"""This module builds the Dash app to visualize the results of the Interclubs."""
+
 import dash
 import dash_bootstrap_components as dbc
 import pandas as pd

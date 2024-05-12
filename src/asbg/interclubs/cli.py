@@ -43,6 +43,7 @@ def show(competition: str) -> None:
 
     if competition is None:
         formatted_results = FormatResults().aggregate_results(results).reset_index()
+        formatted_results["win_percentage"] = round(formatted_results["win_percentage"] * 100, 1)
 
         print("\nRésultats pour l'ensemble des équipes :\n")
         print(
@@ -74,6 +75,7 @@ def print_results(results: pd.DataFrame, competition: str) -> None:
     fmt_competition = f"Résultats pour les {competition} :"
 
     formatted_results = res.aggregate_results(results).reset_index()
+    formatted_results["win_percentage"] = round(formatted_results["win_percentage"] * 100, 1)
 
     print(f"\n{fmt_competition}\n")
     print(

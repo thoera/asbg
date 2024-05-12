@@ -1,14 +1,15 @@
 import numpy as np
 import pandas as pd
-import pytest
 from pandas.testing import assert_frame_equal
 
 from asbg.interclubs.results import FormatResults
 
 
-@pytest.fixture(name="results")
-def fixture_results() -> pd.DataFrame:
-    return pd.DataFrame(
+def test_filter_results() -> None:
+    """Tests that we correctly filter the results."""
+    res = FormatResults()
+
+    results = pd.DataFrame(
         data={
             "team_id": [1, 1, 2, 2, 3, 3, 3],
             "competition": ["foo", "foo", "bar", "bar", "lili", "lili", "lili"],
@@ -17,15 +18,6 @@ def fixture_results() -> pd.DataFrame:
             "losses": [3, 2, 6, 2, 0, 2, 0],
         }
     )
-
-
-def test_filter_results(results: pd.DataFrame) -> None:
-    """Tests that we correctly filter the results.
-
-    Args:
-        results: The results of the Interclubs.
-    """
-    res = FormatResults()
 
     computed = res.filter_results(results, competition="lili")
 
@@ -41,6 +33,38 @@ def test_filter_results(results: pd.DataFrame) -> None:
     expected.index = [4, 5, 6]
 
     assert_frame_equal(computed, expected)
+
+
+def test_aggregate_results() -> None:
+    """Tests that we correctly aggregate the results.
+
+    Args:
+        results: The results to aggregate.
+    """
+    res = FormatResults()
+
+    results = pd.DataFrame(
+        data={
+            "team_id": [3, 3, 3],
+            "competition": ["lili", "lili", "lili"],
+            "discipline": ["DH", "DD", "DX"],
+            "wins": [0, 3, 5],
+            "losses": [0, 2, 0],
+        }
+    )
+
+    computed = res.aggregate_results(results)
+
+    expected = pd.DataFrame(
+        data={
+            "discipline": ["DD", "DX"],
+            "wins": [3, 5],
+            "losses": [2, 0],
+            "win_percentage": [0.6, 1],
+        }
+    ).set_index("discipline")
+
+    assert_frame_equal(computed, expected, check_dtype=False)
 
 
 def test_remove_disciplines_not_played() -> None:

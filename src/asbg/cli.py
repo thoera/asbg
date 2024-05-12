@@ -4,25 +4,46 @@ import os
 
 import click
 
-from asbg.interclubs import Interclubs
+from asbg import __version__
+from asbg.interclubs.cli import interclubs
 
 
-@click.group()
+CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
+
+
+@click.group(context_settings=CONTEXT_SETTINGS)
 def cli() -> None:
     pass
 
 
-@cli.command(
-    short_help="Gets the results of the Interclubs and saves them into a database."
+@click.command(short_help="Display the results of the ASBG players.")
+@click.option(
+    "--frontend",
+    default="streamlit",
+    show_default=True,
+    type=click.Choice(["dash", "streamlit"], case_sensitive=False),
+    help="The frontend used to display the dashboard.",
 )
-def get_interclubs_results() -> None:
-    """Gets the results of the Interclubs and saves them into a database."""
-    Interclubs().parse()
-
-
-@cli.command(short_help="Visualizes the results of the Interclubs in your browser.")
-def streamlit() -> None:
-    """Visualizes the results of the Interclubs in your browser."""
+def dashboard(frontend: str) -> None:
+    """Display the results of the ASBG players."""
     dirname = os.path.dirname(__file__)
-    filename = os.path.join(dirname, "app.py")
-    os.system(f"streamlit run {filename}")
+
+    if frontend == "streamlit":
+        filename = os.path.join(dirname, "dashboard", "app_streamlit.py")
+        os.system(f"streamlit run {filename}")
+
+    if frontend == "dash":
+        filename = os.path.join(dirname, "dashboard", "app.py")
+        os.system(f"python {filename}")
+
+
+@click.command(short_help="Show the version of the application.")
+def version() -> None:
+    """Show the version of the application."""
+    click.echo(__version__)
+
+
+cli.add_command(dashboard)
+cli.add_command(version)
+
+cli.add_command(interclubs)

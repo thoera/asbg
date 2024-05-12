@@ -1,20 +1,13 @@
 """This module parses the results of the Interclubs from https://icbad.ffbad.org."""
 
-import importlib.resources as pkg_resources
 import re
-import sqlite3
 from typing import NamedTuple
 
 import requests
 from bs4 import BeautifulSoup, element
 
-from asbg.logger import get_logger
-
-logger = get_logger()
-
-
-with pkg_resources.as_file(pkg_resources.files("asbg.data")) as dir:
-    DATABASE_FILE = dir / "data.db"
+from asbg.utils.database import connect
+from asbg.utils.logger import get_logger
 
 
 class Team(NamedTuple):
@@ -39,13 +32,14 @@ class Results(NamedTuple):
 
 
 class Interclubs:
-    """Parses the results of the Interclubs and saves them into a database."""
+    """Fetches, parses and saves the results of the Interclubs into a database."""
 
     def __init__(self) -> None:
         self.name = "Association Sportive des Badistes Givrés"
+        self.logger = get_logger()
 
     def parse(self) -> None:
-        """Parses and saves the results of the Interclubs into a database.
+        """Fetches, parses and saves the results of the Interclubs into a database.
 
         Two tables will be created and populated: a "team" table and a "result" table.
 
@@ -78,24 +72,22 @@ class Interclubs:
         during the year for instance).
         See https://www.sqlite.org/lang_conflict.html
         """
-        logger.info("Parsing the results of the Interclubs")
+        self.logger.info("Parsing the results of the Interclubs")
         teams = self._get_teams()
 
         results = {}
 
         for team in teams:
-            logger.debug(f"Team: {team}")
-            team_results = self._get_team_results(team.team_id)
-            logger.debug(f"Team results: {team_results}")
+            team_results = self._get_team_results(team)
             results[team] = team_results
 
         self._save(results)
 
     def _get_teams(self) -> list[Team]:
-        """Gets the teams participating to the Interclubs.
+        """Gets the teams competing in the Interclubs.
 
         Returns:
-            A list of the teams participating to the Interclubs.
+            A list of the teams competing in the Interclubs.
         """
         url = "https://icbad.ffbad.org/instance/ASBG75"
         request = requests.get(url)
@@ -127,17 +119,18 @@ class Interclubs:
 
         return teams
 
-    @staticmethod
-    def _get_team_results(team_id: str) -> Disciplines[Results]:
+    def _get_team_results(self, team: Team) -> Disciplines[Results]:
         """Gets the results in the Interclubs for a given team.
 
         Args:
-            team_id: The team for which to get the results.
+            team: A Team object for which to get the results.
 
         Returns:
             The results in the Interclubs for the given team.
         """
-        url = f"https://icbad.ffbad.org/equipe/{team_id}"
+        self.logger.debug(f"Getting the results for the team: {team.team_id}")
+
+        url = f"https://icbad.ffbad.org/equipe/{team.team_id}"
         request = requests.get(url)
         soup = BeautifulSoup(markup=request.text, features="html.parser")
 
@@ -159,10 +152,12 @@ class Interclubs:
 
             disciplines[discipline] = Results(int(wins), int(losses))
 
-        return Disciplines(**disciplines)
+        results = Disciplines(**disciplines)
+        self.logger.debug(f"Team results: {results}")
 
-    @staticmethod
-    def _save(results: dict[Team, Disciplines[Results]]) -> None:
+        return results
+
+    def _save(self, results: dict[Team, Disciplines[Results]]) -> None:
         """Saves the results into a SQLite database.
 
         This method will create the database if it does not already exists.
@@ -170,11 +165,11 @@ class Interclubs:
         Args:
             results: The results to save into the database.
         """
-        logger.debug("Connecting to (and creating if needed) the database `data.db`")
+        self.logger.debug("Connecting to (and creating if needed) the database `data.db`")
 
-        con = sqlite3.connect(DATABASE_FILE)
+        con = connect()
 
-        logger.debug("Creating the table `team` if it does not exist")
+        self.logger.debug("Creating the table `team` if it does not exist")
         query = """
             CREATE TABLE IF NOT EXISTS
             team(team_id PRIMARY KEY, competition, division, 'group', year)
@@ -183,7 +178,7 @@ class Interclubs:
         with con:
             con.execute(query)
 
-        logger.debug("Populating the table `team`")
+        self.logger.debug("Populating the table `team`")
 
         rows_teams = []
 
@@ -195,7 +190,7 @@ class Interclubs:
         with con:
             con.executemany("REPLACE INTO team VALUES(?, ?, ?, ?, ?)", rows_teams)
 
-        logger.debug("Creating the table `result` if it does not exist")
+        self.logger.debug("Creating the table `result` if it does not exist")
         query = """
             CREATE TABLE IF NOT EXISTS
             result(team_id, discipline, wins, losses, PRIMARY KEY(team_id, discipline))
@@ -204,7 +199,7 @@ class Interclubs:
         with con:
             con.execute(query)
 
-        logger.debug("Populating the table `result`")
+        self.logger.debug("Populating the table `result`")
 
         rows_results = []
 

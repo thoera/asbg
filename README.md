@@ -33,10 +33,10 @@ python -m build
 
 Un répertoire `dist/` devrait être créé avec deux fichiers :
 
-- asbg-<version>.tar.gz
-- asbg-<version>-py3-none-any.whl
+- `asbg-<version>.tar.gz`
+- `asbg-<version>-py3-none-any.whl`
 
-Où <version> est le numéro de version du package (défini dans le fichier `pyproject.toml`).
+Où `<version>` est le numéro de version du package (défini dans le fichier `pyproject.toml`).
 
 Installer le package `asbg` :
 

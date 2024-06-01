@@ -2,9 +2,9 @@
 
 import streamlit as st
 
+from asbg.interclubs.constants import COMPETITIONS, HEADERS
+from asbg.interclubs.database import connect, fetch_results
 from asbg.interclubs.results import FormatResults
-from asbg.utils.constants import COMPETITIONS, HEADERS
-from asbg.utils.database import connect, fetch_results
 
 
 COLUMN_CONFIG = {

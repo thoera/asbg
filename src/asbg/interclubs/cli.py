@@ -4,10 +4,10 @@ import click
 import pandas as pd
 from tabulate import tabulate
 
+from asbg.interclubs.constants import COMPETITIONS, HEADERS
+from asbg.interclubs.database import connect, fetch_results
 from asbg.interclubs.interclubs import Interclubs
 from asbg.interclubs.results import FormatResults
-from asbg.utils.constants import COMPETITIONS, HEADERS
-from asbg.utils.database import connect, fetch_results
 
 
 @click.group(short_help="Subcommands for the Interclubs.")

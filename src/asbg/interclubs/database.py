@@ -12,7 +12,7 @@ def connect() -> sqlite3.Connection:
     Returns:
         A Connection object to the database.
     """
-    with pkg_resources.as_file(pkg_resources.files("asbg.data")) as dir:
+    with pkg_resources.as_file(pkg_resources.files("asbg.interclubs.data")) as dir:
         DATABASE_FILE = dir / "data.db"
 
     return sqlite3.connect(DATABASE_FILE)

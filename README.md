@@ -46,7 +46,7 @@ pip install dist/asbg-<version>-py3-none-any.whl
 
 ### En mode "développement"
 
-Plutôt que de `build` et `install`, une fois votre environnement virtuel actif, vous pouvez simplement utiliser la commande :
+Plutôt que de `build` et `install`, une fois votre environnement virtuel actif, vous pouvez simplement utiliser la commande suivante pour installer le package en mode "développement" ou "éditable" :
 
 ```sh
 pip install -e .
@@ -56,7 +56,7 @@ pip install -e .
 
 L'utilisation du package se fait via une `CLI`.
 
-Il est possible de mettre à jour la base de données des résultats des Interclubs avec la commande :
+Il est possible (et utile !) de mettre à jour la base de données des résultats des Interclubs avec la commande :
 
 ```sh
 asbg interclubs fetch
@@ -70,8 +70,8 @@ asbg interclubs show
 
 L'option `--competition` permet de filtrer les résultats si besoin.
 
-La commande ci-dessous permet de visualiser les résultats dans votre navigateur :
+La commande ci-dessous permet de visualiser les résultats des Interclubs dans votre navigateur de façon plus graphique :
 
 ```sh
-asbg dashboard
+asbg interclubs dashboard
 ```

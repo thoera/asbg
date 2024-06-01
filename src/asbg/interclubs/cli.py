@@ -1,5 +1,7 @@
 """This module defines the subcommands related to the Interclubs."""
 
+import os
+
 import click
 import pandas as pd
 from tabulate import tabulate
@@ -36,7 +38,7 @@ def show(competition: str) -> None:
     """Show the result for the given competition.
 
     Args:
-        competition: The competition for which to show the resutls.
+        competition: The competition for which to show the results.
     """
     con = connect()
     results = fetch_results(con)
@@ -60,6 +62,27 @@ def show(competition: str) -> None:
 
     else:
         print_results(results=results, competition=competition)
+
+
+@click.command(short_help="Display the results of the ASBG players.")
+@click.option(
+    "--frontend",
+    default="streamlit",
+    show_default=True,
+    type=click.Choice(["dash", "streamlit"], case_sensitive=False),
+    help="The frontend used to display the dashboard.",
+)
+def dashboard(frontend: str) -> None:
+    """Display the results of the ASBG players."""
+    dirname = os.path.dirname(__file__)
+
+    if frontend == "streamlit":
+        filename = os.path.join(dirname, "dashboard", "app_streamlit.py")
+        os.system(f"streamlit run {filename}")
+
+    if frontend == "dash":
+        filename = os.path.join(dirname, "dashboard", "app.py")
+        os.system(f"python {filename}")
 
 
 def print_results(results: pd.DataFrame, competition: str) -> None:
@@ -90,3 +113,4 @@ def print_results(results: pd.DataFrame, competition: str) -> None:
 
 interclubs.add_command(fetch)
 interclubs.add_command(show)
+interclubs.add_command(dashboard)

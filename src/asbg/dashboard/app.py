@@ -7,9 +7,9 @@ import plotly.express as px
 from dash import dash_table, dcc, html
 from plotly.graph_objects import Figure
 
+from asbg.interclubs.constants import COMPETITIONS, HEADERS
+from asbg.interclubs.database import connect, fetch_results
 from asbg.interclubs.results import FormatResults
-from asbg.utils.constants import COMPETITIONS, HEADERS
-from asbg.utils.database import connect, fetch_results
 
 
 con = connect()

@@ -6,7 +6,7 @@ from typing import NamedTuple
 import requests
 from bs4 import BeautifulSoup, element
 
-from asbg.utils.database import connect
+from asbg.interclubs.database import connect
 from asbg.utils.logger import get_logger
 
 

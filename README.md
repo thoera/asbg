@@ -1,12 +1,12 @@
-# Résultats des joueuses et joueurs de l'ASBG
+# ASBG
 
-Cette application écrite en Python permet de visualiser les résultats des joueurs de l'ASBG en Interclubs.
+Ce repository est composé de différents utilitaires dédiés au fonctionnement du club de l'[ASBG](https://www.asbg75.com/).
 
-## Prérequis
-
-Il est nécessaire de disposer de Python (>= 3.10) sur son système d'exploitation.
+Il est ainsi possible de visualiser les résultats des différentes équipes lors des Interclubs ou bien de gérer le système de réservation des entrainements.
 
 ## Installation
+
+Il est nécessaire de disposer de Python (>= 3.10) sur son système d'exploitation.
 
 Clonez le package dans un répertoire :
 
@@ -22,8 +22,6 @@ python3 -m venv venv
 . venv/bin/activate
 ```
 
-### Installation
-
 Créez l'archive installable par `pip` :
 
 ```sh
@@ -38,7 +36,7 @@ Un répertoire `dist/` devrait être créé avec deux fichiers :
 
 Où `<version>` est le numéro de version du package (défini dans le fichier `pyproject.toml`).
 
-Installer le package `asbg` :
+Installez le package avec la commande suivante :
 
 ```sh
 pip install dist/asbg-<version>-py3-none-any.whl
@@ -54,9 +52,17 @@ pip install -e .
 
 ## Utilisation
 
-L'utilisation du package se fait via une `CLI`.
+L'utilisation du package se fait via une `CLI`. La commande suivante offre une vue globale des différentes sous-commandes existantes.
 
-Il est possible (et utile !) de mettre à jour la base de données des résultats des Interclubs avec la commande :
+```sh
+asbg
+```
+
+Il est toujours possible d'ajouter l'argument `--help` pour obtenir une description des commandes et des options possibles.
+
+# Résultats des joueuses et joueurs de l'ASBG lors des Interclubs
+
+Il est utile de mettre à jour régulièrement la base de données des résultats avec la commande :
 
 ```sh
 asbg interclubs fetch

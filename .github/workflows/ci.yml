@@ -1,13 +1,10 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python.
 # https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: Python application
+name: CI
 
 on:
   push:
-  pull_request:
-    branches:
-      - main
 
 permissions:
   contents: read
@@ -31,6 +28,6 @@ jobs:
     - name: Pre-commit hooks
       run: |
         pre-commit run --all-files
-    - name: Test with pytest
+    - name: Unit tests
       run: |
         pytest

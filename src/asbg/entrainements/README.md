@@ -18,16 +18,16 @@ Ce formulaire `F2'` comprend deux questions :
 * Souhaites-tu t'inscrire sur la liste prioritaire pour l'entrainement de la semaine suivante ?
 
 La période d'ouverture du formulaire `F2'` est la même que celle de `F1`. Il n'est donc pas possible d'anticiper l'inscription pour le prochain entrainement.
-Les joueurs s'inscrivant sur la liste prioritaire devront confirmer leur participation dans le formulaire envoyer le samedi suivant.
+Les joueurs s'inscrivant sur la liste prioritaire devront confirmer leur participation dans le formulaire envoyer la semaine suivante.
 
 Les données en entrée de l'algorithme sont les suivantes :
 
 * La liste des joueurs inscrits pour l'entrainement à venir ;
 * Les joueurs inscrits sur liste prioritaire pour l'entrainement à venir ;
-* Les joueurs inscrits sur liste d'attente pour l'entrainement à venir.
-* Les joueurs qui étaient sélectionnés pour l'entrainement précédent (présents ou non) ;
+* Les joueurs inscrits sur liste d'attente pour l'entrainement à venir ;
+* Les joueurs qui étaient sélectionnés pour l'entrainement précédent (présents ou non).
 
-Algorithme de sélection :
+### Description de l'algorithme de sélection
 
 * On sélectionne d'abord les joueurs inscrits sur la liste prioritaire pour l'entrainement à venir et inscrits via le formulaire `F1` ;
 * On complète par les joueurs inscrits via `F1` qui n'ont pas participé au dernier entrainement ;
@@ -42,20 +42,18 @@ En cas d'arbitrage à faire entre deux joueurs qui se retrouvent dans les mêmes
 
 ## Ordonnancement de l'envoi des mails et des Google Forms
 
-Semaine 0 :
+### Semaine 0 :
 
 * Envoi du mail permettant de s'inscrire pour l'entrainement à venir le samedi à 18h ;
-* Le Google Forms est ouvert de samedi 18h à lundi 12h ;
+* Le Google Forms est ouvert de samedi 18h à lundi 12h ou jusqu'au moment où le nombre de places maximum est atteint ;
 * Le Google Forms permettant de s'inscrire sur la liste d'attente pour l'entrainement à venir et sur la liste prioritaire pour l'entrainement suivant est ouvert à partir du moment où le nombre de places maximum est atteint et ce jusqu'au lundi 12h ;
-* Envoi du mail de confirmation de participation le lundi à 14h ;
-* Envoi du mail de rejet de participation le lundi à 14h ;
+* Envoi du mail de confirmation ou non de participation le lundi à 14h ;
 
-Semaine 1 :
+### Semaine 1 :
 
 * Envoi du mail permettant de s'inscrire pour l'entrainement à venir pour les joueurs sur la liste prioritaire le vendredi à 18h ;
 * Envoi du mail permettant de s'inscrire pour l'entrainement à venir le samedi à 18h ;
-* Le Google Forms est ouvert de vendredi 18h à lundi 12h pour les joueurs sur la liste prioritaire ;
-* Le Google Forms est ouvert de samedi 18h à lundi 12h pour les autres joueurs ;
+* Le Google Forms est ouvert de vendredi 18h à lundi 12h pour les joueurs sur la liste prioritaire ou jusqu'au moment où le nombre de places maximum est atteint ;
+* Le Google Forms est ouvert de samedi 18h à lundi 12h pour les autres joueurs ou jusqu'au moment où le nombre de places maximum est atteint ;
 * Le Google Forms permettant de s'inscrire sur la liste d'attente pour l'entrainement à venir et sur la liste prioritaire pour l'entrainement suivant est ouvert à partir du moment où le nombre de places maximum est atteint et ce jusqu'au lundi 12h ;
-* Envoi du mail de confirmation de participation le lundi à 14h ;
-* Envoi du mail de rejet de participation le lundi à 14h ;
+* Envoi du mail de confirmation ou non de participation le lundi à 14h ;

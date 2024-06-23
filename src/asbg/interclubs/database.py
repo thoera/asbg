@@ -27,7 +27,7 @@ def fetch_results(con: sqlite3.Connection) -> pd.DataFrame:
     Returns:
         The results of the Interclubs fetched from the database.
     """
-    logger = get_logger()
+    logger = get_logger(__name__)
     logger.debug("Connecting to the database `data.db`")
 
     query = """

@@ -22,3 +22,7 @@ dist/
 # Secrets
 *secrets.json
 *token.json
+
+# Coverage
+**/.coverage
+**/htmlcov/

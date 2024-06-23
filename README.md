@@ -50,6 +50,12 @@ Plutôt que de `build` et `install`, une fois votre environnement virtuel actif,
 pip install -e .
 ```
 
+Pour installer les dépendances supplémentaires qui sont nécessaires pour contribuer au package (comme `pytest` par exemple), utilisez la commande suivante :
+
+```sh
+pip install -e .[dev]
+```
+
 ## Utilisation
 
 L'utilisation du package se fait via une `CLI`. La commande suivante offre une vue globale des différentes sous-commandes existantes.

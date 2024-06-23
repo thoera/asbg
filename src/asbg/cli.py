@@ -4,6 +4,7 @@ import click
 
 from asbg import __version__
 from asbg.interclubs.cli import interclubs
+from asbg.teams.cli import teams
 
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
@@ -22,3 +23,4 @@ def version() -> None:
 
 cli.add_command(version)
 cli.add_command(interclubs)
+cli.add_command(teams)

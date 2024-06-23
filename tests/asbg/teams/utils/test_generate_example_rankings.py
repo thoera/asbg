@@ -40,10 +40,10 @@ def test_generate_players_rankings() -> None:
     players = generate_players_rankings(n=4, save=False)
 
     expected = [
-        Player(license=0, nom="ERM", prenom="dby", simple="D8", double="D8", mixte="D8"),
-        Player(license=1, nom="ZZE", prenom="kyo", simple="NC", double="P11", mixte="P11"),
-        Player(license=2, nom="RLS", prenom="rzf", simple="P12", double="P11", mixte="P12"),
-        Player(license=3, nom="SZR", prenom="wtt", simple="D8", double="P10", mixte="D8"),
+        Player(licence=0, nom="ERM", prenom="dby", simple="D8", double="D8", mixte="D8"),
+        Player(licence=1, nom="ZZE", prenom="kyo", simple="NC", double="P11", mixte="P11"),
+        Player(licence=2, nom="RLS", prenom="rzf", simple="P12", double="P11", mixte="P12"),
+        Player(licence=3, nom="SZR", prenom="wtt", simple="D8", double="P10", mixte="D8"),
     ]
 
     assert players == expected

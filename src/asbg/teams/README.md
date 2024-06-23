@@ -33,12 +33,43 @@ Plusieurs paramètres sont configurables dans l'algorithme :
 * le nombre d'équipes mixtes et d'équipes masculines ;
 * le nombre de joueuses et joueurs dans les équipes mixtes et masculines.
 
+## Contrat d'interface pour le classement
+
+Le classement de chaque adhérent est attendu sous la forme d'un fichier "csv" respectant le contrat d'interface suivant :
+
+* délimiteur ";"
+* les champs suivants sont obligatoires : "licence", "nom", "prenom", "simple", "double" et "mixte"
+
+Le classement est celui utilisé par la Fédération Française de Badminton :
+
+* NC
+* P12
+* P11
+* P10
+* D9
+* D8
+* D7
+* R6
+* R5
+* R4
+* N3
+* N2
+* N1
+
+Le fichier peut être exporté depuis https://poona.ffbad.org/.
+
+Un exemple de fichier fictif est fourni (`asbg/teams/data/example-rankings.csv`) ou peut être généré avec la commande :
+
+```sh
+asbg teams generate-players-rankings
+```
+
 ## Contrat d'interface pour les critères spécifiques
 
 Les critères spécifiques sont attendus sous la forme d'un fichier "csv" respectant le contrat d'interface suivant :
 
 * délimiteur ";"
-* les champs suivants sont obligatoires : "nom" et "prenom"
+* les champs suivants sont obligatoires : "licence", "nom" et "prenom"
 * tout critère paramétré dans le processus de sélection de l'algorithme doit être présent dans le fichier "csv"
 
 Le paramétrage des critères à prendre en compte et leur poidsrespectif se fait via le fichier de configuration "equipes.yaml".

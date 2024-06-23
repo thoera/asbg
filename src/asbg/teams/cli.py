@@ -2,6 +2,7 @@
 
 import click
 
+import asbg.teams.utils.generate_example_criteria as criteria
 import asbg.teams.utils.generate_example_rankings as rankings
 
 
@@ -14,7 +15,7 @@ def teams() -> None:
 @click.option(
     "--players",
     required=False,
-    default=26,
+    default=50,
     show_default=True,
     type=int,
     help="The number of players to generate.",
@@ -28,4 +29,23 @@ def generate_players_rankings(players: int) -> None:
     rankings.generate_players_rankings(n=players)
 
 
+@click.command(short_help="Generate random players with their respective criteria.")
+@click.option(
+    "--players",
+    required=False,
+    default=50,
+    show_default=True,
+    type=int,
+    help="The number of players to generate.",
+)
+def generate_players_criteria(players: int) -> None:
+    """Generate random players with their respective criteria.
+
+    Args:
+        players: The number of players to generate.
+    """
+    criteria.generate_players_criteria(n=players)
+
+
 teams.add_command(generate_players_rankings)
+teams.add_command(generate_players_criteria)

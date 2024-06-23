@@ -72,4 +72,4 @@ Les critères spécifiques sont attendus sous la forme d'un fichier "csv" respec
 * les champs suivants sont obligatoires : "licence", "nom" et "prenom"
 * tout critère paramétré dans le processus de sélection de l'algorithme doit être présent dans le fichier "csv"
 
-Le paramétrage des critères à prendre en compte et leur poidsrespectif se fait via le fichier de configuration "equipes.yaml".
+Le paramétrage des critères à prendre en compte et leur poids respectif se fait via le fichier de configuration "teams.yaml".

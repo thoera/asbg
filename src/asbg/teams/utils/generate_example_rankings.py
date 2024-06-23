@@ -32,7 +32,7 @@ class Ranking(Enum):
 class Player(NamedTuple):
     """Defines a player with the mandatory fields."""
 
-    licence: str
+    licence: int
     nom: str
     prenom: str
     simple: str
@@ -53,18 +53,21 @@ def clip(n: int, lower_bound: int = 0, upper_bound: int = 6) -> int:
     return max(lower_bound, min(n, upper_bound))
 
 
-def generate_players_rankings(n: int = 26, save: bool = True) -> list[Player]:
-    """Generates random players with a licence number, a firstanme, a lastname and the rankings.
+def generate_players_rankings(n: int = 50, save: bool = True) -> list[Player]:
+    """Generates random players with a license number, a firstanme, a lastname and the rankings.
 
     Args:
-        n: The number of players to generate.
+        n: The number of players to generate. Defaults to 50.
         save: Whether to save or not the results to a file. Defaults to True.
+
+    Returns:
+        A list of players with their respective rankings.
     """
-    logger.info(f"Generating {n} random players...")
+    logger.info(f"Generating {n} random players with their rankings...")
 
     PLAYERS = []
 
-    for i in range(n):
+    for license_number in range(n):
         nom = (
             choice(ascii_lowercase).upper()
             + choice(ascii_lowercase).upper()
@@ -78,7 +81,7 @@ def generate_players_rankings(n: int = 26, save: bool = True) -> list[Player]:
         double = Ranking(clip(choice(range(ranking - 1, ranking + 2)))).name
         mixte = Ranking(clip(choice(range(ranking - 1, ranking + 2)))).name
 
-        PLAYERS.append(Player(i, nom, prenom, simple, double, mixte))
+        PLAYERS.append(Player(license_number, nom, prenom, simple, double, mixte))
 
     if save:
         ressource = pkg_resources.files("asbg.teams.data").joinpath("example-rankings.csv")

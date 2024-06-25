@@ -18,6 +18,7 @@ class Criterion(NamedTuple):
     """Defines a player with the mandatory criteria fields."""
 
     licence: int
+    genre: str
     participation: bool
     critere: str
     poids: float
@@ -87,11 +88,13 @@ def generate_players_criteria(n: int = 50, save: bool = True) -> list[Criterion]
 
     for license_number in range(n):
         player_criteria = generate_player_criteria(criteria)
+        genre = choices(["Femme", "Homme"], [0.3, 0.7])[0]
         participation = choices([True, False], [0.8, 0.2])[0]
 
         for criteria_ in player_criteria:
             criteria_.insert(0, license_number)
-            criteria_.insert(1, participation)
+            criteria_.insert(1, genre)
+            criteria_.insert(2, participation)
             CRITERIA.append(Criterion(*criteria_))
 
     if save:

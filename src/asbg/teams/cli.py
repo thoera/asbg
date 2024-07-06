@@ -2,8 +2,9 @@
 
 import click
 
-import asbg.teams.utils.generate_example_criteria as criteria
-import asbg.teams.utils.generate_example_rankings as rankings
+import asbg.teams.utils.generate_players_criteria as criteria
+import asbg.teams.utils.generate_players_rankings as rankings
+from asbg.teams.utils.reshape_players_criteria import ReshapeToWide
 
 
 @click.group(short_help="Subcommands for the drawing of Interclubs teams.")
@@ -47,5 +48,12 @@ def generate_players_criteria(players: int) -> None:
     criteria.generate_players_criteria(n=players)
 
 
+@click.command(short_help="Reshape a criteria file in a long format to a wide one.")
+def reshape_criteria() -> None:
+    """Reshape a criteria file in a long format to a wide one."""
+    ReshapeToWide().reshape()
+
+
 teams.add_command(generate_players_rankings)
 teams.add_command(generate_players_criteria)
+teams.add_command(reshape_criteria)

@@ -1,8 +1,8 @@
 # The criteria to take into account when computing the score and their respective weights.
 
 # Rules:
-# The weights of the subcriteria of a given criteria should sum to one.
-# The weights of all the criteria should also sum to one.
+# The weights of all the criteria should sum to one.
+# For a given critrerion, the weights of the subcriteria should also sum to one.
 
 criteria:
   criteria_1:
@@ -21,6 +21,7 @@ criteria:
   criteria_3:
     weight: 0.15
     subcriteria:
+      criteria_3_1: 1
 
   criteria_4:
     weight: 0.1
@@ -32,9 +33,9 @@ criteria:
 teams:
   mixed:
     number: 2
-    men: 5
-    women: 4
+    men: 8
+    women: 5
 
   men:
-    number: 1
-    men: 8
+    number: 2
+    men: 10

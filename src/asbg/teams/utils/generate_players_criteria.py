@@ -1,3 +1,5 @@
+"""This module generates an example of a criteria file to use when drawing the Interclubs teams."""
+
 import csv
 import importlib.resources as pkg_resources
 from random import choice, choices
@@ -10,8 +12,8 @@ from asbg.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-Subcriteria_T = dict[str, float] | None
-Criteria_T = dict[str, dict[str, float | Subcriteria_T]]
+Subcriteria = dict[str, float] | None
+Criteria = dict[str, dict[str, float | Subcriteria]]
 
 
 class Criterion(NamedTuple):
@@ -27,7 +29,7 @@ class Criterion(NamedTuple):
     score: float
 
 
-def load_criteria_from_file() -> Criteria_T:
+def load_criteria_from_config() -> Criteria:
     """Loads the criteria and their weights from a yaml file."""
     ressource = pkg_resources.files("asbg.config").joinpath("teams.yaml")
     with pkg_resources.as_file(ressource) as filename:
@@ -37,7 +39,7 @@ def load_criteria_from_file() -> Criteria_T:
     return criteria["criteria"]
 
 
-def generate_player_criteria(criteria: Criteria_T) -> list[list[str | float]]:
+def generate_player_criteria(criteria: Criteria) -> list[list[str | float]]:
     """Generates the criteria for a player.
 
     Args:
@@ -82,7 +84,7 @@ def generate_players_criteria(n: int = 50, save: bool = True) -> list[Criterion]
     """
     logger.info(f"Generating {n} random players with their criteria...")
 
-    criteria = load_criteria_from_file()
+    criteria = load_criteria_from_config()
 
     CRITERIA = []
 

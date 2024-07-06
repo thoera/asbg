@@ -2,7 +2,7 @@ import random
 
 import pytest
 
-from asbg.teams.utils.generate_example_rankings import Player, clip, generate_players_rankings
+from asbg.teams.utils.generate_players_rankings import Player, clip, generate_players_rankings
 
 
 @pytest.mark.parametrize(

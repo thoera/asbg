@@ -2,31 +2,15 @@
 
 import csv
 import importlib.resources as pkg_resources
-from enum import Enum, unique
 from random import choice
 from string import ascii_lowercase
 from typing import NamedTuple
 
+from asbg.teams.ranking import Rankings
 from asbg.utils.logger import get_logger
 
 
 logger = get_logger(__name__)
-
-
-@unique
-class Ranking(Enum):
-    """Reprensents the possible rankings for a player.
-
-    The highest ranking is voluntarily limited to "D7" to better represent the current players.
-    """
-
-    NC = 0
-    P12 = 1
-    P11 = 2
-    P10 = 3
-    D9 = 4
-    D8 = 5
-    D7 = 6
 
 
 class Player(NamedTuple):
@@ -75,11 +59,11 @@ def generate_players_rankings(n: int = 50, save: bool = True) -> list[Player]:
         )
         prenom = choice(ascii_lowercase) + choice(ascii_lowercase) + choice(ascii_lowercase)
 
-        ranking = choice(list(Ranking)).value
+        ranking = choice(list(Rankings)).value
 
-        simple = Ranking(clip(choice(range(ranking - 1, ranking + 2)))).name
-        double = Ranking(clip(choice(range(ranking - 1, ranking + 2)))).name
-        mixte = Ranking(clip(choice(range(ranking - 1, ranking + 2)))).name
+        simple = Rankings(clip(choice(range(ranking - 1, ranking + 2)))).name
+        double = Rankings(clip(choice(range(ranking - 1, ranking + 2)))).name
+        mixte = Rankings(clip(choice(range(ranking - 1, ranking + 2)))).name
 
         PLAYERS.append(Player(license_number, nom, prenom, simple, double, mixte))
 

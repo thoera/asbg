@@ -4,12 +4,19 @@ import click
 
 import asbg.teams.utils.generate_players_criteria as criteria
 import asbg.teams.utils.generate_players_rankings as rankings
+from asbg.teams.ranking import RankPlayers
 from asbg.teams.utils.reshape_players_criteria import ReshapeToWide
 
 
 @click.group(short_help="Subcommands for the drawing of Interclubs teams.")
 def teams() -> None:
     pass
+
+
+@click.command(short_help="Rank the players based on their official ranking and a set of criteria.")
+def rank_players() -> None:
+    """Rank the players based on their official ranking and a set of criteria."""
+    RankPlayers().rank_players()
 
 
 @click.command(short_help="Generate random players with their respective rankings.")
@@ -54,6 +61,7 @@ def reshape_criteria() -> None:
     ReshapeToWide().reshape()
 
 
+teams.add_command(rank_players)
 teams.add_command(generate_players_rankings)
 teams.add_command(generate_players_criteria)
 teams.add_command(reshape_criteria)

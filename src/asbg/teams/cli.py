@@ -4,6 +4,7 @@ import click
 
 import asbg.teams.utils.generate_players_criteria as criteria
 import asbg.teams.utils.generate_players_rankings as rankings
+from asbg.teams.drawing import DrawPlayers
 from asbg.teams.ranking import RankPlayers
 from asbg.teams.utils.reshape_players_criteria import ReshapeToWide
 
@@ -17,6 +18,14 @@ def teams() -> None:
 def rank_players() -> None:
     """Rank the players based on their official ranking and a set of criteria."""
     RankPlayers().rank_players()
+
+
+@click.command(
+    short_help="Draw the players for the teams based on their ranking and a set of criteria."
+)
+def draw_players() -> None:
+    """Draw the players for the teams based on their ranking and a set of criteria."""
+    DrawPlayers().draw_players()
 
 
 @click.command(short_help="Generate random players with their respective rankings.")
@@ -62,6 +71,7 @@ def reshape_criteria() -> None:
 
 
 teams.add_command(rank_players)
+teams.add_command(draw_players)
 teams.add_command(generate_players_rankings)
 teams.add_command(generate_players_criteria)
 teams.add_command(reshape_criteria)

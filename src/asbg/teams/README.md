@@ -35,6 +35,13 @@ Pour pouvoir expérimenter avec différentes compositions, les paramètres confi
 * le nombre d'équipes mixtes et d'équipes masculines ;
 * le nombre de joueuses et joueurs dans les équipes mixtes et masculines.
 
+Chaque critère peut être composé de différents sous-critères permettant ainsi un regroupement logique de ceux-ci. Tout comme un poids est donné à chacun des critères, un poids est également accordé à chacun des sous-critères.
+
+Les deux règles suivantes doivent être respectées :
+
+* la somme des poids de l'ensemble des critères doit faire 1 ;
+* la somme des sous-critères de chacun des critères doit également faire 1.
+
 ## Contrat d'interface pour le classement
 
 Le classement de chaque adhérent est attendu sous la forme d'un fichier "csv" respectant le contrat d'interface suivant :

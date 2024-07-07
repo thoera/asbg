@@ -87,3 +87,7 @@ La commande ci-dessous permet de visualiser les résultats des Interclubs dans v
 ```sh
 asbg interclubs dashboard
 ```
+
+# Tirage des équipes d'Interclubs
+
+Un [README spécifique](src/asbg/teams/README.md) est dédié aux tirage des équipes d'Interclubs.

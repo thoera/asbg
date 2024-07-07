@@ -1,4 +1,4 @@
-# Équipes
+# Tirage des équipes d'Interclubs
 
 ## Objectif
 

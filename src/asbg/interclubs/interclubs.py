@@ -36,7 +36,7 @@ class Interclubs:
 
     def __init__(self) -> None:
         self.name = "Association Sportive des Badistes Givrés"
-        self.logger = get_logger()
+        self.logger = get_logger(__name__)
 
     def parse(self) -> None:
         """Fetches, parses and saves the results of the Interclubs into a database.

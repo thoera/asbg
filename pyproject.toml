@@ -24,6 +24,7 @@ dependencies = [
   "google-api-python-client",
   "google-auth-oauthlib",
   "pandas",
+  "polars",
   "PyYAML",
   "requests",
   "streamlit",
@@ -31,7 +32,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-development = [
+dev = [
     "pre-commit",
     "pytest",
 ]
